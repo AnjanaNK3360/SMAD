@@ -1,0 +1,53 @@
+﻿<Window x:Class="SMAD.Pages.AlertAndNotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SMAD.Pages"
+        mc:Ignorable="d"
+         Title="Alerts and Notifications"
+        Height="600"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFFFFF">
+
+    <Canvas>
+
+        <!-- Header ="#007ACC"
+                       Foreground="White" FontSize="28" F-->
+
+        <TextBlock Text="Alerts and Notifications" Background="#007ACC"
+Foreground="White" FontSize="28" FontWeight="Bold" TextAlignment="Center" 
+HorizontalAlignment="Left" Height="53" Width="800" VerticalAlignment="Center" />
+
+        <!-- Alerts List -->
+
+        <DataGrid x:Name="grdAlerts" Height="284" Width="722" SelectionMode="Single" ItemsSource="{Binding Alerts}"
+          HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="29" 
+          AutoGenerateColumns="False" SelectedItem="{Binding SelectedAlert , Mode=TwoWay}" IsReadOnly="True" 
+          AreRowDetailsFrozen="True" Canvas.Top="92">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="AlertID" Binding="{Binding AlertID}"/>
+                <DataGridTextColumn Header="LineID"  Binding="{Binding LineID}"/>
+                <DataGridTextColumn Header="AlertDate"  Binding="{Binding AlertDate}"/>
+                <DataGridTextColumn Header="AlertType"  Binding="{Binding AlertType}"/>
+                <DataGridTextColumn Header="Severity"  Binding="{Binding Severity}"/>
+                <DataGridTextColumn Header="Message"  Binding="{Binding Message}"/>
+                <DataGridTextColumn Header="Resolved"  Binding="{Binding Resolved}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal"                   
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" Canvas.Left="268" Canvas.Top="491" Width="209" Height="37">
+            <Button Content="Acknowledge All"  
+                    Margin="5"/>
+
+            <Button Content="Settings"  
+                    Margin="5"/>
+        </StackPanel>
+        <Button x:Name="btnAddAlert" Content="Add Alert" Canvas.Left="537" Canvas.Top="491" HorizontalAlignment="Left" VerticalAlignment="Center" Width="82" Height="36" Click="btnAddAlert_Click" RenderTransformOrigin="-0.644,0.625"/>
+        <Button x:Name="btnEditAlert" Content="Edit Alert" Canvas.Left="645" Canvas.Top="491" Width="82" Height="36" RenderTransformOrigin="-0.644,0.625" HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnEditAlert_Click"/>
+
+    </Canvas>
+</Window>

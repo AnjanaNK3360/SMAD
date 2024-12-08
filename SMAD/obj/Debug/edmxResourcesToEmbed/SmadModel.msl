@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SmadDbModelStoreContainer" CdmEntityContainer="SmadDbEntities">
+    <EntitySetMapping Name="Alerts">
+      <EntityTypeMapping TypeName="SmadDbModel.Alert">
+        <MappingFragment StoreEntitySet="Alerts">
+          <ScalarProperty Name="AlertID" ColumnName="AlertID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
+          <ScalarProperty Name="AlertType" ColumnName="AlertType" />
+          <ScalarProperty Name="Severity" ColumnName="Severity" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Resolved" ColumnName="Resolved" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionLines">
+      <EntityTypeMapping TypeName="SmadDbModel.ProductionLine">
+        <MappingFragment StoreEntitySet="ProductionLines">
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="LineName" ColumnName="LineName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionMetrics">
+      <EntityTypeMapping TypeName="SmadDbModel.ProductionMetric">
+        <MappingFragment StoreEntitySet="ProductionMetrics">
+          <ScalarProperty Name="MetricID" ColumnName="MetricID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="MetricDate" ColumnName="MetricDate" />
+          <ScalarProperty Name="ProductionRate" ColumnName="ProductionRate" />
+          <ScalarProperty Name="Efficiency" ColumnName="Efficiency" />
+          <ScalarProperty Name="QualityRate" ColumnName="QualityRate" />
+          <ScalarProperty Name="Downtime" ColumnName="Downtime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionTrends">
+      <EntityTypeMapping TypeName="SmadDbModel.ProductionTrend">
+        <MappingFragment StoreEntitySet="ProductionTrends">
+          <ScalarProperty Name="TrendID" ColumnName="TrendID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="TrendDate" ColumnName="TrendDate" />
+          <ScalarProperty Name="AverageProductionRate" ColumnName="AverageProductionRate" />
+          <ScalarProperty Name="AverageEfficiency" ColumnName="AverageEfficiency" />
+          <ScalarProperty Name="AverageQualityRate" ColumnName="AverageQualityRate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="SmadDbModel.Setting">
+        <MappingFragment StoreEntitySet="Settings">
+          <ScalarProperty Name="SettingID" ColumnName="SettingID" />
+          <ScalarProperty Name="SettingKey" ColumnName="SettingKey" />
+          <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="SmadDbModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmadDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Alerts">
+    <Key>
+      <PropertyRef Name="AlertID" />
+    </Key>
+    <Property Name="AlertID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="AlertDate" Type="datetime" />
+    <Property Name="AlertType" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Severity" Type="nvarchar" MaxLength="50" />
+    <Property Name="Message" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Resolved" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductionLines">
+    <Key>
+      <PropertyRef Name="LineID" />
+    </Key>
+    <Property Name="LineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProductionMetrics">
+    <Key>
+      <PropertyRef Name="MetricID" />
+    </Key>
+    <Property Name="MetricID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="MetricDate" Type="datetime" Nullable="false" />
+    <Property Name="ProductionRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Efficiency" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="QualityRate" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="Downtime" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="ProductionTrends">
+    <Key>
+      <PropertyRef Name="TrendID" />
+    </Key>
+    <Property Name="TrendID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="TrendDate" Type="datetime" Nullable="false" />
+    <Property Name="AverageProductionRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="AverageEfficiency" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="AverageQualityRate" Type="decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="Settings">
+    <Key>
+      <PropertyRef Name="SettingID" />
+    </Key>
+    <Property Name="SettingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SettingKey" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SettingValue" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="UpdatedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="LastLogin" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__Alerts__LineID__5165187F">
+    <End Role="ProductionLines" Type="Self.ProductionLines" Multiplicity="1" />
+    <End Role="Alerts" Type="Self.Alerts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionLines">
+        <PropertyRef Name="LineID" />
+      </Principal>
+      <Dependent Role="Alerts">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Productio__LineI__4CA06362">
+    <End Role="ProductionLines" Type="Self.ProductionLines" Multiplicity="1" />
+    <End Role="ProductionMetrics" Type="Self.ProductionMetrics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionLines">
+        <PropertyRef Name="LineID" />
+      </Principal>
+      <Dependent Role="ProductionMetrics">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Productio__LineI__59063A47">
+    <End Role="ProductionLines" Type="Self.ProductionLines" Multiplicity="1" />
+    <End Role="ProductionTrends" Type="Self.ProductionTrends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionLines">
+        <PropertyRef Name="LineID" />
+      </Principal>
+      <Dependent Role="ProductionTrends">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmadDbModelStoreContainer">
+    <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionLines" EntityType="Self.ProductionLines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionMetrics" EntityType="Self.ProductionMetrics" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionTrends" EntityType="Self.ProductionTrends" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Alerts__LineID__5165187F" Association="Self.FK__Alerts__LineID__5165187F">
+      <End Role="ProductionLines" EntitySet="ProductionLines" />
+      <End Role="Alerts" EntitySet="Alerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Productio__LineI__4CA06362" Association="Self.FK__Productio__LineI__4CA06362">
+      <End Role="ProductionLines" EntitySet="ProductionLines" />
+      <End Role="ProductionMetrics" EntitySet="ProductionMetrics" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Productio__LineI__59063A47" Association="Self.FK__Productio__LineI__59063A47">
+      <End Role="ProductionLines" EntitySet="ProductionLines" />
+      <End Role="ProductionTrends" EntitySet="ProductionTrends" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

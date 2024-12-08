@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmadDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Alert">
+    <Key>
+      <PropertyRef Name="AlertID" />
+    </Key>
+    <Property Name="AlertID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LineID" Type="Int32" Nullable="false" />
+    <Property Name="AlertDate" Type="DateTime" Precision="3" />
+    <Property Name="AlertType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Severity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Resolved" Type="Boolean" />
+    <NavigationProperty Name="ProductionLine" Relationship="Self.FK__Alerts__LineID__5165187F" FromRole="Alerts" ToRole="ProductionLines" />
+  </EntityType>
+  <EntityType Name="ProductionLine">
+    <Key>
+      <PropertyRef Name="LineID" />
+    </Key>
+    <Property Name="LineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LineName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Alerts" Relationship="Self.FK__Alerts__LineID__5165187F" FromRole="ProductionLines" ToRole="Alerts" />
+    <NavigationProperty Name="ProductionMetrics" Relationship="Self.FK__Productio__LineI__4CA06362" FromRole="ProductionLines" ToRole="ProductionMetrics" />
+    <NavigationProperty Name="ProductionTrends" Relationship="Self.FK__Productio__LineI__59063A47" FromRole="ProductionLines" ToRole="ProductionTrends" />
+  </EntityType>
+  <EntityType Name="ProductionMetric">
+    <Key>
+      <PropertyRef Name="MetricID" />
+    </Key>
+    <Property Name="MetricID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LineID" Type="Int32" Nullable="false" />
+    <Property Name="MetricDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ProductionRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Efficiency" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="QualityRate" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="Downtime" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="ProductionLine" Relationship="Self.FK__Productio__LineI__4CA06362" FromRole="ProductionMetrics" ToRole="ProductionLines" />
+  </EntityType>
+  <EntityType Name="ProductionTrend">
+    <Key>
+      <PropertyRef Name="TrendID" />
+    </Key>
+    <Property Name="TrendID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LineID" Type="Int32" Nullable="false" />
+    <Property Name="TrendDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AverageProductionRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AverageEfficiency" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="AverageQualityRate" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="ProductionLine" Relationship="Self.FK__Productio__LineI__59063A47" FromRole="ProductionTrends" ToRole="ProductionLines" />
+  </EntityType>
+  <EntityType Name="Setting">
+    <Key>
+      <PropertyRef Name="SettingID" />
+    </Key>
+    <Property Name="SettingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SettingKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SettingValue" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="LastLogin" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK__Alerts__LineID__5165187F">
+    <End Role="ProductionLines" Type="Self.ProductionLine" Multiplicity="1" />
+    <End Role="Alerts" Type="Self.Alert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionLines">
+        <PropertyRef Name="LineID" />
+      </Principal>
+      <Dependent Role="Alerts">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Productio__LineI__4CA06362">
+    <End Role="ProductionLines" Type="Self.ProductionLine" Multiplicity="1" />
+    <End Role="ProductionMetrics" Type="Self.ProductionMetric" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionLines">
+        <PropertyRef Name="LineID" />
+      </Principal>
+      <Dependent Role="ProductionMetrics">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Productio__LineI__59063A47">
+    <End Role="ProductionLines" Type="Self.ProductionLine" Multiplicity="1" />
+    <End Role="ProductionTrends" Type="Self.ProductionTrend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionLines">
+        <PropertyRef Name="LineID" />
+      </Principal>
+      <Dependent Role="ProductionTrends">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmadDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Alerts" EntityType="Self.Alert" />
+    <EntitySet Name="ProductionLines" EntityType="Self.ProductionLine" />
+    <EntitySet Name="ProductionMetrics" EntityType="Self.ProductionMetric" />
+    <EntitySet Name="ProductionTrends" EntityType="Self.ProductionTrend" />
+    <EntitySet Name="Settings" EntityType="Self.Setting" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Alerts__LineID__5165187F" Association="Self.FK__Alerts__LineID__5165187F">
+      <End Role="ProductionLines" EntitySet="ProductionLines" />
+      <End Role="Alerts" EntitySet="Alerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Productio__LineI__4CA06362" Association="Self.FK__Productio__LineI__4CA06362">
+      <End Role="ProductionLines" EntitySet="ProductionLines" />
+      <End Role="ProductionMetrics" EntitySet="ProductionMetrics" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Productio__LineI__59063A47" Association="Self.FK__Productio__LineI__59063A47">
+      <End Role="ProductionLines" EntitySet="ProductionLines" />
+      <End Role="ProductionTrends" EntitySet="ProductionTrends" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
